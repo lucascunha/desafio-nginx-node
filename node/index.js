@@ -1,5 +1,7 @@
 const express = require('express')
 const app = express()
+const path = require('path')
+const router = express.Router()
 const port = 3000
 const config = {
     host: 'db',
@@ -10,14 +12,29 @@ const config = {
 const mysql = require('mysql')
 const connection = mysql.createConnection(config)
 
-const sql = `INSERT INTO people(name) values('Lucas')`
-connection.query(sql)
+var firstName = "vazio";
+
+connection.query(`INSERT INTO people(name) values('Lucas')`)
+
+const sql = `SELECT name from people`
+connection.query(sql, (error, results, fields) => {
+    if (error) throw error
+    firstName = results[0].name
+    console.log("Dentro do método " + firstName)
+})
+
+console.log("Fora do método " + firstName)
+
 connection.end()
 
-app.get('/', (req,res) => {
-    res.send('<h1>Full Cycle Rocks!</h1>')
-})
+app.set("view engine", "pug");
+app.set("views", path.join(__dirname, "views"));
 
-app.listen(port, ()=> {
-    console.log('Rodando na porta ' + port)
-})
+router.get("/", (req, res) => {
+  res.render("index", { message: "Full Cycle Rocks!", lista: firstName });
+});
+
+app.use("/", router);
+app.listen(process.env.port || 3000);
+
+console.log("Running at Port 3000");
