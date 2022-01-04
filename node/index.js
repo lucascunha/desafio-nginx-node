@@ -6,7 +6,7 @@ const port = 3000
 
 var firstName = "Teste OK!";
 
-/* const config = {
+const config = {
     host: 'db',
     user: 'root',
     password: 'root',
@@ -14,6 +14,18 @@ var firstName = "Teste OK!";
 };
 const mysql = require('mysql')
 const connection = mysql.createConnection(config)
+
+let createPeople = `create table if not exists people(
+  id int not null auto_increment,
+  name varchar(255),
+  primary key(id)
+)`;
+
+connection.query(createPeople, function(err, results, fields) {
+  if (err) {
+    console.log(err.message);
+  }
+});
 
 connection.query(`INSERT INTO people(name) values('Lucas')`)
 
@@ -23,7 +35,7 @@ connection.query(sql, (error, results, fields) => {
     firstName = results[0].name
 })
 
-connection.end() */
+connection.end()
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
