@@ -1,2 +1,2 @@
-*.pem
-mysql/*
+node_modules
+mysql
