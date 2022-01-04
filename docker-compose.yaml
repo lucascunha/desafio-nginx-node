@@ -14,11 +14,11 @@ services:
     volumes:
       - .:/usr/src/app/
     tty: true
-    ports: 
+    ports:
       - "3000:3000"
-#    depends_on:
-#      - db
-
+  #    depends_on:
+  #      - db
+  
   nginx:
     restart: always
     build:
