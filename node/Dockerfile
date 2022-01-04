@@ -2,7 +2,7 @@ FROM node:15
 
 WORKDIR /usr/src/app/
 
-RUN npm init --y && npm install express --save && npm i --S express pug
+RUN npm init --y && npm install express --save && npm i --S express pug && npm install mysql
 
 COPY . .
 
