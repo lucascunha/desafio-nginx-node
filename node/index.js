@@ -5,6 +5,7 @@ const router = express.Router()
 const port = 3000
 
 var firstName = "Teste OK!";
+var resultado = "";
 
 const config = {
     host: 'db',
@@ -13,6 +14,7 @@ const config = {
     database:'nodedb'
 };
 const mysql = require('mysql')
+const { json } = require('express')
 const connection = mysql.createConnection(config)
 
 let createPeople = `create table if not exists people(
@@ -33,6 +35,7 @@ const sql = `SELECT name from people`
 connection.query(sql, (error, results, fields) => {
     if (error) throw error
     firstName = results[0].name
+    resultado = JSON.stringify(results)
 })
 
 connection.end()
@@ -41,7 +44,7 @@ app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
 
 router.get("/", (req, res) => {
-  res.render("index", { message: "Full Cycle Rocks!", lista: firstName });
+  res.render("index", { message: "Full Cycle Rocks!", lista: resultado });
 });
 
 app.use("/", router);
