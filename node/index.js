@@ -4,7 +4,6 @@ const path = require('path')
 const router = express.Router()
 const port = 3000
 
-var firstName = "Teste OK!";
 var resultado = "";
 
 const config = {
@@ -34,7 +33,6 @@ connection.query(`INSERT INTO people(name) values('Lucas')`)
 const sql = `SELECT name from people`
 connection.query(sql, (error, results, fields) => {
     if (error) throw error
-    firstName = results[0].name
     resultado = JSON.stringify(results)
 })
 

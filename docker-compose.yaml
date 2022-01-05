@@ -10,9 +10,11 @@ services:
 #    entrypoint: docker-entrypoint.sh
     command: node ./node/index.js
     networks:
-      - node-network
+      - node-network  
     volumes:
       - .:/usr/src/app/
+      # the volume above prevents our host system's node_modules to be mounted
+      - exclude:/usr/src/app/node_modules/
     tty: true
     ports:
       - "3000:3000"
@@ -46,3 +48,6 @@ services:
 networks:
   node-network:
     driver: bridge
+
+volumes:
+    exclude:
